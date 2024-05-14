@@ -35,5 +35,6 @@ The App is using the [News API](https://newsapi.org) to searching news.
    
 ### Project Architecture
 This app uses [MVVM (Model View View-Model)] architecture.
+
 ![mvvm-arch](https://github.com/dewanganmohit/NewsReader/assets/12555874/81606ff2-b001-4b19-9fc4-f8a433b846a9)
 
