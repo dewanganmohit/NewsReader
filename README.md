@@ -15,7 +15,7 @@ The App is using the [News API](https://newsapi.org) to searching news.
 - [ViewBinding] - Makes it easier to build code that interacts with views by creating a binding class for each XML layout file in that module.
 - [Jetpack Navigation] - Navigation refers to the interactions that allow users to navigate across, into, and back out from the different pieces of content within your app
 - [Glide] - An image loading and caching library for Android focused on smooth scrolling
-- [Extension Function) - Kotlin gives the programmer the ability to add more functionality to the existing classes, without inheriting them.
+- [Extension Function] - Kotlin gives the programmer the ability to add more functionality to the existing classes, without inheriting them.
 
 ### Reference
    [ViewModel]: <https://developer.android.com/topic/libraries/architecture/viewmodel>
