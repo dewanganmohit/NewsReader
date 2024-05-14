@@ -1,4 +1,4 @@
-package com.myapp.application.newsreader.ui
+package com.myapp.application.newsreader.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
