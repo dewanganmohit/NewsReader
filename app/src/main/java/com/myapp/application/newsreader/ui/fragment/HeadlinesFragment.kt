@@ -5,85 +5,66 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.AbsListView
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.myapp.application.newsreader.R
 import com.myapp.application.newsreader.adapters.ArticlesAdapter
-import com.myapp.application.newsreader.databinding.FragmentSearchBinding
+import com.myapp.application.newsreader.databinding.FragmentHeadlinesBinding
 import com.myapp.application.newsreader.models.Article
 import com.myapp.application.newsreader.viewmodel.NewsViewModel
 import com.myapp.application.newsreader.util.CommonUtils.Companion.showToastMessage
+import com.myapp.application.newsreader.util.Constants.Companion.COUNTRY_CODE
 import com.myapp.application.newsreader.util.Constants.Companion.QUERY_PAGE_SIZE
-import com.myapp.application.newsreader.util.Constants.Companion.SEARCH_NEWS_TIME_DELAY
 import com.myapp.application.newsreader.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
-private const val TAG = "SearchNewsFragment"
+private const val TAG = "HeadlineFragment"
 
 @AndroidEntryPoint
-class SearchFragment : Fragment(R.layout.fragment_search), ArticlesAdapter.OnItemClickListener {
+class HeadlinesFragment : Fragment(R.layout.fragment_headlines), ArticlesAdapter.OnItemClickListener {
 
     private val viewModel: NewsViewModel by viewModels()
     var isLoading = false
     var isLastPage = false
     var isScrolling = false
-    lateinit var binding: FragmentSearchBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding = FragmentSearchBinding.bind(view)
+        val binding = FragmentHeadlinesBinding.bind(view)
         val articleAdapter = ArticlesAdapter(this)
 
         binding.apply {
-            rvSearchNews.apply {
+            rvHeadlines.apply {
                 adapter = articleAdapter
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(activity)
-                addOnScrollListener(this@SearchFragment.scrollListener)
+                addOnScrollListener(this@HeadlinesFragment.scrollListener)
             }
         }
 
-        var job: Job? = null
-        binding.etSearch.addTextChangedListener { editable ->
-            job?.cancel()
-            job = MainScope().launch {
-                delay(SEARCH_NEWS_TIME_DELAY)
-                editable?.let {
-                    if (editable.toString().isNotEmpty()) {
-                        viewModel.searchNews(editable.toString())
-                    }
-                }
-            }
-        }
-
-        viewModel.searchNews.observe(viewLifecycleOwner) {
+        viewModel.headlines.observe(viewLifecycleOwner) {
             when (it) {
                 is Resource.Success -> {
-                    isLoading = false
                     binding.paginationProgressBar.visibility = View.INVISIBLE
+                    isLoading = false
                     it.data?.let { newsResponse ->
                         articleAdapter.submitList(newsResponse.articles.toList())
                         val totalPages = newsResponse.totalResults / QUERY_PAGE_SIZE + 2
-                        isLastPage = viewModel.searchNewsPage == totalPages
+                        isLastPage = viewModel.headlinesPage == totalPages
                         if (isLastPage)
-                            binding.rvSearchNews.setPadding(0, 0, 0, 0)
+                            binding.rvHeadlines.setPadding(0, 0, 0, 0)
                     }
                 }
 
                 is Resource.Error -> {
-                    isLoading = false
                     binding.paginationProgressBar.visibility = View.INVISIBLE
+                    isLoading = false
                     it.message?.let { message ->
-                        Log.e(TAG, "Error: $message")
                         context?.showToastMessage(message)
+                        Log.e(TAG, "Error: $message")
                     }
                 }
 
@@ -119,14 +100,15 @@ class SearchFragment : Fragment(R.layout.fragment_search), ArticlesAdapter.OnIte
                 isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
 
             if (shouldPaginate) {
-                viewModel.searchNews(binding.etSearch.text.toString())
+                viewModel.getHeadlines(COUNTRY_CODE)
                 isScrolling = false
             }
         }
     }
 
     override fun onItemClick(article: Article) {
-        val action = SearchFragmentDirections.actionSearchFragmentToArticleDetailsFragment(article)
+        val action =
+            HeadlinesFragmentDirections.actionHeadlineFragmentToArticleDetailsFragment(article)
         findNavController().navigate(action)
     }
 }

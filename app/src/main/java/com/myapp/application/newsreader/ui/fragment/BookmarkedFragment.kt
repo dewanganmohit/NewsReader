@@ -11,20 +11,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.myapp.application.newsreader.R
 import com.myapp.application.newsreader.adapters.ArticlesAdapter
-import com.myapp.application.newsreader.databinding.FragmentBookmarkBinding
+import com.myapp.application.newsreader.databinding.FragmentBookmarkedBinding
 import com.myapp.application.newsreader.models.Article
 import com.myapp.application.newsreader.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class BookmarkFragment : Fragment(R.layout.fragment_bookmark), ArticlesAdapter.OnItemClickListener {
+class BookmarkedFragment : Fragment(R.layout.fragment_bookmarked), ArticlesAdapter.OnItemClickListener {
 
     private val newsViewModel: NewsViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentBookmarkBinding.bind(view)
+        val binding = FragmentBookmarkedBinding.bind(view)
         val articleAdapter = ArticlesAdapter(this)
         binding.apply {
             rvSavedNews.apply {
@@ -66,7 +66,7 @@ class BookmarkFragment : Fragment(R.layout.fragment_bookmark), ArticlesAdapter.O
 
     override fun onItemClick(article: Article) {
         val action =
-            BookmarkFragmentDirections.actionBookmarkFragmentToArticleDetailsFragment(article)
+            BookmarkedFragmentDirections.actionBookmarkFragmentToArticleDetailsFragment(article)
         findNavController().navigate(action)
     }
 }
