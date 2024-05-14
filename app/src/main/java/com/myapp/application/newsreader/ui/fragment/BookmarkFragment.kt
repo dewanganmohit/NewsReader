@@ -13,7 +13,7 @@ import com.myapp.application.newsreader.R
 import com.myapp.application.newsreader.adapters.ArticlesAdapter
 import com.myapp.application.newsreader.databinding.FragmentBookmarkBinding
 import com.myapp.application.newsreader.models.Article
-import com.myapp.application.newsreader.ui.NewsViewModel
+import com.myapp.application.newsreader.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -13,7 +13,7 @@ import com.myapp.application.newsreader.R
 import com.myapp.application.newsreader.adapters.ArticlesAdapter
 import com.myapp.application.newsreader.databinding.FragmentHeadlineBinding
 import com.myapp.application.newsreader.models.Article
-import com.myapp.application.newsreader.ui.NewsViewModel
+import com.myapp.application.newsreader.viewmodel.NewsViewModel
 import com.myapp.application.newsreader.util.CommonUtils.Companion.showToastMessage
 import com.myapp.application.newsreader.util.Constants.Companion.COUNTRY_CODE
 import com.myapp.application.newsreader.util.Constants.Companion.QUERY_PAGE_SIZE

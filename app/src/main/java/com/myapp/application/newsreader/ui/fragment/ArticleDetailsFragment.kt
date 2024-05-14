@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.myapp.application.newsreader.R
 import com.myapp.application.newsreader.databinding.FragmentArticleDetailsBinding
-import com.myapp.application.newsreader.ui.NewsViewModel
+import com.myapp.application.newsreader.viewmodel.NewsViewModel
 import com.myapp.application.newsreader.util.CommonUtils.Companion.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 

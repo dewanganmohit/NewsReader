@@ -1,8 +1,6 @@
-package com.myapp.application.newsreader.ui
+package com.myapp.application.newsreader.viewmodel
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
